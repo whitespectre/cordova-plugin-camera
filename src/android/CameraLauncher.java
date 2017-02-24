@@ -365,11 +365,6 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
     // TODO: Images from kitkat filechooser not going into crop function
     public void getImage(int srcType, int returnType, int encodingType) {
 
-        if(this.toastMessage != null && !this.toastMessage.isEmpty()) {
-          Toast.makeText(cordova.getActivity().getApplicationContext(),this.toastMessage, Toast.LENGTH_LONG).show();
-          this.toastMessage = null;
-        }
-
         Intent intent = new Intent();
         String title = GET_PICTURE;
         croppedUri = null;
@@ -411,6 +406,11 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         if (this.cordova != null) {
             this.cordova.startActivityForResult((CordovaPlugin) this, Intent.createChooser(intent,
                     new String(title)), (srcType + 1) * 16 + returnType + 1);
+        }
+
+        if(this.toastMessage != null && !this.toastMessage.isEmpty()) {
+          Toast.makeText(cordova.getActivity().getApplicationContext(),this.toastMessage, Toast.LENGTH_LONG).show();
+          this.toastMessage = null;
         }
     }
 
