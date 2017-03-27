@@ -392,6 +392,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             }
         } else if (this.mediaType == VIDEO) {
             intent.setType("video/*");
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
             title = GET_VIDEO;
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
