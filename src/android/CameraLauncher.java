@@ -95,6 +95,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
     public static final int PERMISSION_DENIED_ERROR = 20;
     public static final int TAKE_PIC_SEC = 0;
     public static final int SAVE_TO_ALBUM_SEC = 1;
+    public static final int REQUEST_PERMISSIONS = 2;
 
     private static final String LOG_TAG = "CameraLauncher";
 
@@ -142,6 +143,10 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         this.applicationId = (String) BuildHelper.getBuildConfigValue(cordova.getActivity(), "APPLICATION_ID");
         this.applicationId = preferences.getString("applicationId", this.applicationId);
 
+        if (action.equals("permissions")) {
+          PermissionHelper.requestPermissions(this, REQUEST_PERMISSIONS, new String[] {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO});
+          return true;
+        }
 
         if (action.equals("takePicture")) {
             this.srcType = CAMERA;
@@ -1325,6 +1330,9 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                 break;
             case SAVE_TO_ALBUM_SEC:
                 this.getImage(this.srcType, this.destType, this.encodingType);
+                break;
+            case REQUEST_PERMISSIONS:
+                this.callbackContext.success();
                 break;
         }
     }

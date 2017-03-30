@@ -159,6 +159,11 @@ cameraExport.getPicture = function(successCallback, errorCallback, options) {
     //return new CameraPopoverHandle();
 };
 
+/** requesting camera & micro permissions so we can then later record using WebRtc for example */
+cameraExport.getRecordingPermissions = function(successCallback, errorCallback, options) {
+    exec(successCallback, errorCallback, "Camera", "permissions", []);
+};
+
 /**
  * Removes intermediate image files that are kept in temporary storage
  * after calling [`camera.getPicture`]{@link module:camera.getPicture}. Applies only when the value of
