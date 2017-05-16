@@ -146,7 +146,9 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         if (action.equals("permissions")) {
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
               PermissionHelper.requestPermissions(this, REQUEST_PERMISSIONS, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA});
-          }          
+          } else {
+              this.callbackContext.success();
+          }
           return true;
         }
 
