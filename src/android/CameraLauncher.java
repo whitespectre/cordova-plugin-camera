@@ -114,7 +114,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
     private boolean correctOrientation;     // Should the pictures orientation be corrected
     private boolean orientationCorrected;   // Has the picture's orientation been corrected
     private boolean allowEdit;              // Should we allow the user to crop the image.
-    private String toastMessage;
+    private boolean toastMessage;
 
     protected final static String[] permissions = { Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE };
 
@@ -169,7 +169,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             this.allowEdit = args.getBoolean(7);
             this.correctOrientation = args.getBoolean(8);
             this.saveToPhotoAlbum = args.getBoolean(9);
-            this.toastMessage = args.getString(12);
+            this.toastMessage = true;
 
             // If the user specifies a 0 or smaller width/height
             // make it -1 so later comparisons succeed
@@ -414,10 +414,14 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
                     new String(title)), (srcType + 1) * 16 + returnType + 1);
         }
 
-        if(this.toastMessage != null && !this.toastMessage.isEmpty()) {
-          Toast.makeText(cordova.getActivity().getApplicationContext(),this.toastMessage, Toast.LENGTH_LONG).show();
-          this.toastMessage = null;
+        if(this.toastMessage == true) {
+          Toast.makeText(cordova.getActivity().getApplicationContext(), getAppResource("warning_time_select", "string") , Toast.LENGTH_LONG).show();          
+          this.toastMessage = false;
         }
+    }
+
+    private int getAppResource(String name, String type) {
+      return cordova.getActivity().getResources().getIdentifier(name, type, cordova.getActivity().getPackageName());
     }
 
 
